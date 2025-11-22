@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Cool Page</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e1e1e, #333);
+            font-family: Arial;
+            color: white;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: pop 0.8s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #ff6363;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Random HTML Demo ✨</h2>
+        <p id="text">Click the button for a random fact!</p>
+        <button onclick="randomFact()">Generate</button>
+    </div>
+
+    <script>
+        const facts = [
+            "The Moon is moving away from Earth.",
+            "JavaScript was created in 10 days.",
+            "Your phone is more powerful than Apollo computers.",
+            "Honey never spoils.",
+            "The Sun makes up 99.8% of the solar system's mass."
+        ];
+
+        function randomFact() {
+            document.getElementById("text").textContent =
+                facts[Math.floor(Math.random() * facts.length)];
+        }
+    </script>
+
+</body>
+</html>
