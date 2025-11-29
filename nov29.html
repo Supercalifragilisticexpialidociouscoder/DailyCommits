@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Random Quote Generator</h1>
+    <p id="quote" style="font-size:1.5em; font-style:italic; margin:20px 0;"></p>
+    <button onclick="generateQuote()" style="padding:10px 20px; font-size:1em;">New Quote</button>
+
+    <script>
+    const quotes = [
+        "The best way to get started is to quit talking and begin doing. – Walt Disney",
+        "Success is not in what you have, but who you are. – Bo Bennett",
+        "Opportunities don't happen, you create them. – Chris Grosser",
+        "Don't watch the clock; do what it does. Keep going. – Sam Levenson",
+        "The harder you work for something, the greater you'll feel when you achieve it."
+    ];
+
+    function generateQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        document.getElementById('quote').textContent = quotes[randomIndex];
+    }
+
+    // Show a quote on page load
+    generateQuote();
+    </script>
+</body>
+</html>
