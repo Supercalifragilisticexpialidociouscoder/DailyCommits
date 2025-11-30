@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Cloud Generator</title>
+<style>
+ body {
+ margin: 0;
+ padding: 40px;
+ font-family: "Poppins", sans-serif;
+ background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+ min-height: 100vh;
+ }
+ .container {
+ max-width: 900px;
+ margin: auto;
+ background: rgba(255,255,255,0.45);
+ backdrop-filter: blur(12px);
+ padding: 30px;
+ border-radius: 18px;
+ box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+ }
+ h1 {
+ text-align: center;
+ color: #333;
+ font-size: 2rem;
+ margin-bottom: 20px;
+ }
+ textarea {
+ width: 100%;
+ height: 100px;
+ border-radius: 10px;
+ border: none;
+ padding: 12px;
+ font-size: 1rem;
+  outline: none;
+ box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
+ }
+ button {
+ margin-top: 15px;
+ width: 100%;
+ padding: 12px;
+ font-size: 1.1rem;
+ border: none;
+ border-radius: 10px;
+ background: #ff0066;
+ color: white;
+ cursor: pointer;
+ transition: 0.3s;
+ letter-spacing: 1px;
+ }
+ button:hover {
+ background: #cc0052;
+ transform: scale(1.03);
+ }
+ #cloud {
+ margin-top: 25px;
+ min-height: 200px;
+ padding: 20px;
+ background: rgba(255,255,255,0.6);
+ border-radius: 14px;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+ display: flex;
+ flex-wrap: wrap;
+ gap: 10px;
+ }
+ .word {
+ font-weight: 600;
+ user-select: none;
+ transition: 0.25s ease;
+ }
+ .word:hover {
+ transform: scale(1.2) rotate(5deg);
+ }
+</style>
+</head>
+<body>
+<div class="container">
+ <h1>✨ Word Cloud Generator</h1>
+ <textarea id="textInput" placeholder="Type or paste text here..."></textarea>
+ <button onclick="generateCloud()">Generate Word Cloud</button>
+ <div id="cloud"></div>
+</div>
+<script>
+ function randomColor(){
+ const colors = 
+['#ff5733','#33b5e5','#9b59b6','#27ae60','#f39c12','#d35400','#c0392b','#16a085'];
+ return colors[Math.floor(Math.random()*colors.length)];
+ }
+ function randomSize(){
+ return Math.floor(Math.random() * (60 - 15) + 15); 
+ }
+ function generateCloud(){
+ const input = document.getElementById("textInput").value.trim();
+ const cloud = document.getElementById("cloud");
+ cloud.innerHTML = "";
+ if(!input){
+ cloud.innerHTML = "<p>Please enter some text.</p>";
+ return;
+ }
+ let words = input.split(/\s+/);
+ words.forEach(word => {
+ const span = document.createElement("span");
+ span.classList.add("word");
+ span.textContent = word;
+ span.style.fontSize = randomSize() + "px";
+ span.style.color = randomColor();
+ span.style.margin = "5px";
+ cloud.appendChild(span);
+ });
+ }
+</script>
+</body>
+</html>
