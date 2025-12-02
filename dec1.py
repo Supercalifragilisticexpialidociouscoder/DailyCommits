@@ -36,3 +36,6 @@ class A:
         print("Method 2 from class A")
 class B(A):
     def method3(self):
+        print("Method 3 from class B")
+b = B()
+b.method1() 
