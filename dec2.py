@@ -39,3 +39,26 @@ c1.job()
 c2 = child2()
 c2.property()
 c2.buisness()   
+
+
+class a:
+    def display1(self):
+        print("displaying class a")
+
+class b(a):
+    def displayb(self):
+        print("displaying class b")
+
+class c(a):
+    def display2(self):
+        print("displaying class c")
+
+class d(b, c):
+    def display3(self):
+        print("displaying class d")
+
+d1 = d()
+d1.display1()
+d1.displayb()
+d1.display2()
+d1.display3()
