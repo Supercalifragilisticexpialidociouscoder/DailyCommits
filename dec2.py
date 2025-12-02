@@ -23,3 +23,19 @@ class baby_dog(dog):
         print("Baby dog yaps")
 b = baby_dog()
 b.sound()
+
+class father:
+    def property(self):
+        print("House and Car")
+class child1(father):
+    def job(self):
+        print("child1 is a doctor")
+class child2(father):
+    def buisness(self):
+        print("child2 owns a buisness")
+c1 = child1()
+c1.property()
+c1.job()
+c2 = child2()
+c2.property()
+c2.buisness()   
