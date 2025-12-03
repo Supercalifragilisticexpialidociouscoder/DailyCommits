@@ -7,12 +7,15 @@
     <style>
         #cursor {
             position: fixed;
-            width: 20px;
-            height: 20px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: #'+Math.floor(Math.random()*16777215).toString(16)+';
+            background: #3498db;
+            box-shadow: 0 0 20px 5px rgba(52,152,219,0.5), 0 0 40px 10px rgba(255,255,255,0.2);
+            border: 2px solid #fff;
             pointer-events: none;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
             z-index: 9999;
         }
     </style>
@@ -22,12 +25,17 @@
     <script>
         const cursor = document.getElementById('cursor');
         function randomColor() {
-            return '#' + Math.floor(Math.random()*16777215).toString(16);
+            return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
         }
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
             cursor.style.background = randomColor();
+            cursor.style.boxShadow = `0 0 20px 5px ${cursor.style.background}, 0 0 40px 10px rgba(255,255,255,0.2)`;
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            setTimeout(() => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 100);
         });
     </script>
 </body>
