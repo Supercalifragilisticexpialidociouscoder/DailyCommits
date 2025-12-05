@@ -4,6 +4,440 @@
   <meta charset="UTF-8" />
   <title>Minimal To-Do</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050509;
+      --card: #0f1016;
+      --accent: #5b8def;
+      --accent-soft: rgba(91, 141, 239, 0.12);
+      --border: #262734;
+      --text: #f5f5f7;
+      --muted: #8b8da3;
+      --danger: #ff4b6a;
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #171824, #04040a 60%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        sans-serif;
+      color: var(--text);
+    }
+
+    .app {
+      width: min(420px, 92vw);
+      background: radial-gradient(circle at top left, #18192a, #0b0c12);
+      border-radius: 24px;
+      padding: 22px 20px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(120, 122, 160, 0.24);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glow accents */
+    .app::before,
+    .app::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(32px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .app::before {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(91, 141, 239, 0.35), transparent);
+      top: -120px;
+      right: -90px;
+    }
+
+    .app::after {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(180, 120, 255, 0.3), transparent);
+      bottom: -110px;
+      left: -80px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .title {
+      font-size: 1.1rem;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .title-pill {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(10, 190, 130, 0.16);
+      border-radius: 999px;
+      padding: 3px 8px;
+      border: 1px solid rgba(46, 210, 150, 0.4);
+      color: #b9ffe4;
+    }
+
+    .subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .chip-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(83, 86, 130, 0.9);
+      background: rgba(9, 9, 18, 0.85);
+      backdrop-filter: blur(14px);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #46d48f;
+      box-shadow: 0 0 10px rgba(70, 212, 143, 0.9);
+    }
+
+    .chip-key {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 6px;
+      border: 1px solid rgba(112, 116, 160, 0.9);
+      background: rgba(5, 5, 14, 0.9);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .task-input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(71, 74, 118, 0.9);
+      background: rgba(12, 12, 20, 0.9);
+      color: var(--text);
+      font-size: 0.86rem;
+      outline: none;
+      transition: border 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+    }
+
+    .task-input::placeholder {
+      color: rgba(139, 141, 163, 0.8);
+    }
+
+    .task-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(91, 141, 239, 0.5);
+      background: rgba(13, 14, 23, 0.98);
+    }
+
+    .add-btn {
+      border: none;
+      outline: none;
+      border-radius: 999px;
+      padding: 0 15px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      background: linear-gradient(135deg, #5b8def, #7c5bff);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      box-shadow: 0 10px 24px rgba(77, 118, 230, 0.6);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .add-btn span {
+      font-size: 1rem;
+      transform: translateY(-0.5px);
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 14px 30px rgba(87, 131, 240, 0.75);
+    }
+
+    .add-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(78, 121, 220, 0.55);
+    }
+
+    .list-wrapper {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(42, 44, 70, 0.9);
+      max-height: 260px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      position: relative;
+      z-index: 1;
+    }
+
+    .list-wrapper::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .list-wrapper::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .list-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(78, 82, 128, 0.9);
+      border-radius: 999px;
+    }
+
+    .empty-state {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 6px 18px;
+      opacity: 0.8;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(9, 9, 18, 0.88);
+      border: 1px solid rgba(49, 51, 86, 0.95);
+      backdrop-filter: blur(16px);
+      transform-origin: top;
+      animation: fadeIn 0.16s ease-out;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .checkbox {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 125, 180, 0.95);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      transition: border 0.12s ease, background 0.12s ease, box-shadow 0.12s ease,
+        transform 0.12s ease;
+    }
+
+    .checkbox::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: transparent;
+      transition: background 0.12s ease, transform 0.12s ease;
+      transform: scale(0.2);
+    }
+
+    .checkbox.done {
+      border-color: rgba(99, 175, 255, 0.9);
+      background: radial-gradient(circle, #6aa2ff, #4367ff);
+      box-shadow: 0 0 0 1px rgba(73, 130, 255, 0.7),
+        0 0 16px rgba(76, 133, 255, 0.85);
+      transform: translateY(0.4px);
+    }
+
+    .checkbox.done::after {
+      background: #050612;
+      transform: scale(0.9);
+    }
+
+    .text {
+      font-size: 0.83rem;
+      color: #e5e6ff;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      transition: color 0.16s ease, opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .text.done {
+      color: rgba(151, 154, 191, 0.9);
+      text-decoration: line-through;
+      opacity: 0.78;
+      transform: translateY(0.4px);
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .time-tag {
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(81, 85, 136, 0.95);
+      color: var(--muted);
+      background: rgba(10, 11, 20, 0.9);
+    }
+
+    .delete-btn {
+      border: none;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 4px 5px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(250, 130, 172, 0.82);
+      transition: background 0.12s ease, transform 0.12s ease, color 0.12s ease;
+    }
+
+    .delete-btn:hover {
+      background: rgba(255, 75, 106, 0.18);
+      color: #ff8ca8;
+      transform: translateY(-0.3px);
+    }
+
+    .footer {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .count-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      margin-right: 5px;
+      background: #5b8def;
+      box-shadow: 0 0 12px rgba(91, 141, 239, 0.9);
+      display: inline-block;
+    }
+
+    .clear-btn {
+      border: none;
+      background: transparent;
+      color: rgba(255, 142, 171, 0.9);
+      font-size: 0.7rem;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 999px;
+      transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+    }
+
+    .clear-btn:hover {
+      background: rgba(255, 75, 106, 0.18);
+      transform: translateY(-0.2px);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .app {
+        padding: 20px 16px 16px;
+        border-radius: 20px;
+      }
+
+      .title {
+        font-size: 1.02rem;
+      }
+
+      .chip-row {
+        flex-wrap: wrap;
+      }
+
+      .subtitle {
+        max-width: 210px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="app">
