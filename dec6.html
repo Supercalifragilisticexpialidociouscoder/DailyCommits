@@ -1,12 +1,51 @@
 <!-- Responsive navbar -->
- <!DOCTYPE html>
- <html lang="en">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
- </head>
- <body>
-    
- </body>
- </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Day 6 - Responsive Navbar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo">
+        <div class="logo-pill"></div>
+        <span>Day 6 / Navbar</span>
+      </div>
+
+      <!-- Hidden checkbox controls the menu -->
+      <input type="checkbox" id="menu-toggle" />
+
+      <!-- Hamburger icon -->
+      <label for="menu-toggle" class="hamburger" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <!-- Navigation links -->
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Playground</a></li>
+        <li><a href="#">About</a></li>
+        <li class="btn-cta"><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Demo content so you can scroll and see sticky nav -->
+  <main class="hero">
+    <h1>Responsive <span class="accent">Navbar</span> with Hamburger Animation</h1>
+    <p>
+      This is your <span class="accent">Day 6</span> project:
+      a sticky, responsive navigation bar that collapses into a hamburger menu on smaller screens.
+      The three lines smoothly morph into an “X” when the menu is open, using only HTML and CSS
+      (checkbox hack + transitions).
+    </p>
+  </main>
+</body>
+</html>
