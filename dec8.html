@@ -498,14 +498,12 @@
 
     lightboxClose.addEventListener("click", closeLightbox);
 
-    // click outside content to close
     lightbox.addEventListener("click", (e) => {
       if (e.target === lightbox) {
         closeLightbox();
       }
     });
 
-    // Esc key to close
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && lightbox.classList.contains("active")) {
         closeLightbox();
