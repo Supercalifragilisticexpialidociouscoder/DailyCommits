@@ -12,7 +12,7 @@ def load_best_score():
 def save_best_score(score):
     with open(SCORE_FILE, "w") as f:
         f.write(str(score))
-# Choose difficulty level
+#difficulty level
 def choose_difficulty():
     print("\nChoose difficulty:")
     print("1. Easy   (1–50, 10 attempts)")
