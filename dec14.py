@@ -1,6 +1,6 @@
 import random
 import os
-
+# File to store the best score
 SCORE_FILE = "best_score.txt"
 
 def load_best_score():
@@ -8,11 +8,11 @@ def load_best_score():
         with open(SCORE_FILE, "r") as f:
             return int(f.read())
     return None
-
+# Save the best score to a file
 def save_best_score(score):
     with open(SCORE_FILE, "w") as f:
         f.write(str(score))
-
+# Choose difficulty level
 def choose_difficulty():
     print("\nChoose difficulty:")
     print("1. Easy   (1–50, 10 attempts)")
