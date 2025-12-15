@@ -26,5 +26,6 @@ def main():
             typewriter("Goodbye! Keep coding! 🚀")
             break
 
+
 if __name__ == "__main__":
     main()
