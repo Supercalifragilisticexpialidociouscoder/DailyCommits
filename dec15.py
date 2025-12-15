@@ -18,7 +18,7 @@ def random_quote():
     return random.choice(quotes)
 
 def main():
-    typewriter("Welcome to the Random Programmer Quote Generator!\n")
+    typewriter("Welcome to the Random Programmer Quote Generator!!!\n")
     while True:
         typewriter(f"\n💡 {random_quote()}\n")
         again = input("Want another quote? (y/n): ").strip().lower()
