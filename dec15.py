@@ -13,7 +13,7 @@ def random_quote():
         "First, solve the problem. Then, write the code.",
         "Experience is the name everyone gives to their mistakes.",
         "In order to be irreplaceable, one must always be different.",
-        "Java is to JavaScript what car is to Carpet."
+        "Java is to JavaScript what car is to Carpet..."
     ]
     return random.choice(quotes)
 
