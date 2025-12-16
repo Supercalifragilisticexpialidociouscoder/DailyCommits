@@ -6,6 +6,331 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <!-- Simple Task Manager App (HTML + JS + CSS) -->
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    #app-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 32px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    #task-form {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    #task-form input, #task-form select {
+        padding: 8px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    #task-form button {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+    #task-form button:hover {
+        background: #0056b3;
+    }
+    #filters {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 18px;
+        align-items: center;
+    }
+    #filters label {
+        font-size: 0.95rem;
+        color: #555;
+    }
+    #task-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .task-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f9f9f9;
+        margin-bottom: 10px;
+        padding: 14px 18px;
+        border-radius: 5px;
+        border-left: 5px solid #007bff;
+        transition: background 0.2s;
+    }
+    .task-item.completed {
+        background: #e0ffe0;
+        text-decoration: line-through;
+        color: #888;
+        border-left: 5px solid #28a745;
+    }
+    .task-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .task-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    .task-meta {
+        font-size: 0.92rem;
+        color: #666;
+    }
+    .task-actions {
+        display: flex;
+        gap: 8px;
+    }
+    .task-actions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 4px 8px;
+        border-radius: 3px;
+        transition: background 0.2s;
+    }
+    .task-actions button:hover {
+        background: #eee;
+    }
+    #stats {
+        margin-top: 24px;
+        font-size: 1.05rem;
+        color: #444;
+        display: flex;
+        gap: 24px;
+        justify-content: flex-end;
+    }
+    @media (max-width: 600px) {
+        #app-container {
+            padding: 10px;
+        }
+        #task-form {
+            flex-direction: column;
+            gap: 8px;
+        }
+        #filters {
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
+    </style>
+
+    <div id="app-container">
+        <h1>Task Manager</h1>
+        <form id="task-form" autocomplete="off">
+            <input type="text" id="task-title" placeholder="Task title" required maxlength="100">
+            <input type="date" id="task-due">
+            <select id="task-priority">
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+        <div id="filters">
+            <label>
+                <input type="checkbox" id="show-completed" checked>
+                Show Completed
+            </label>
+            <label>
+                <input type="checkbox" id="show-incomplete" checked>
+                Show Incomplete
+            </label>
+            <label>
+                Sort by:
+                <select id="sort-tasks">
+                    <option value="created">Created Time</option>
+                    <option value="due">Due Date</option>
+                    <option value="priority">Priority</option>
+                    <option value="title">Title</option>
+                </select>
+            </label>
+            <input type="text" id="search-tasks" placeholder="Search tasks..." style="flex:1;max-width:200px;">
+        </div>
+        <ul id="task-list"></ul>
+        <div id="stats"></div>
+    </div>
+
+    <script>
+    const taskForm = document.getElementById('task-form');
+    const taskTitle = document.getElementById('task-title');
+    const taskDue = document.getElementById('task-due');
+    const taskPriority = document.getElementById('task-priority');
+    const taskList = document.getElementById('task-list');
+    const showCompleted = document.getElementById('show-completed');
+    const showIncomplete = document.getElementById('show-incomplete');
+    const sortTasks = document.getElementById('sort-tasks');
+    const searchTasks = document.getElementById('search-tasks');
+    const stats = document.getElementById('stats');
+
+    let tasks = [];
+    let taskIdCounter = 1;
+
+    function saveTasks() {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        localStorage.setItem('taskIdCounter', taskIdCounter);
+    }
+    function loadTasks() {
+        const saved = localStorage.getItem('tasks');
+        if (saved) tasks = JSON.parse(saved);
+        const savedId = localStorage.getItem('taskIdCounter');
+        if (savedId) taskIdCounter = parseInt(savedId, 10);
+    }
+    function renderTasks() {
+        let filtered = tasks.slice();
+        if (!showCompleted.checked) filtered = filtered.filter(t => !t.completed);
+        if (!showIncomplete.checked) filtered = filtered.filter(t => t.completed);
+        const q = searchTasks.value.trim().toLowerCase();
+        if (q) filtered = filtered.filter(t => t.title.toLowerCase().includes(q));
+        switch (sortTasks.value) {
+            case 'created':
+                filtered.sort((a, b) => a.created - b.created);
+                break;
+            case 'due':
+                filtered.sort((a, b) => (a.due || '') > (b.due || '') ? 1 : -1);
+                break;
+            case 'priority':
+                const pOrder = {high: 1, normal: 2, low: 3};
+                filtered.sort((a, b) => pOrder[a.priority] - pOrder[b.priority]);
+                break;
+            case 'title':
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+        }
+        taskList.innerHTML = '';
+        for (const task of filtered) {
+            const li = document.createElement('li');
+            li.className = 'task-item' + (task.completed ? ' completed' : '');
+            li.dataset.id = task.id;
+            const details = document.createElement('div');
+            details.className = 'task-details';
+            const title = document.createElement('span');
+            title.className = 'task-title';
+            title.textContent = task.title;
+            details.appendChild(title);
+            const meta = document.createElement('span');
+            meta.className = 'task-meta';
+            meta.innerHTML = 
+                (task.due ? `Due: <b>${task.due}</b> | ` : '') +
+                `Priority: <b>${task.priority}</b> | Created: ${new Date(task.created).toLocaleString()}`;
+            details.appendChild(meta);
+            li.appendChild(details);
+            const actions = document.createElement('div');
+            actions.className = 'task-actions';
+            const completeBtn = document.createElement('button');
+            completeBtn.title = task.completed ? 'Mark as incomplete' : 'Mark as complete';
+            completeBtn.innerHTML = task.completed ? '✅' : '⬜';
+            completeBtn.onclick = () => toggleComplete(task.id);
+            actions.appendChild(completeBtn);
+            const editBtn = document.createElement('button');
+            editBtn.title = 'Edit';
+            editBtn.innerHTML = '✏️';
+            editBtn.onclick = () => editTask(task.id);
+            actions.appendChild(editBtn);
+            const delBtn = document.createElement('button');
+            delBtn.title = 'Delete';
+            delBtn.innerHTML = '🗑️';
+            delBtn.onclick = () => deleteTask(task.id);
+            actions.appendChild(delBtn);
+            li.appendChild(actions);
+            taskList.appendChild(li);
+        }
+        updateStats();
+    }
+    function updateStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.completed).length;
+        const incomplete = total - completed;
+        stats.innerHTML = `Total: <b>${total}</b> | Completed: <b>${completed}</b> | Incomplete: <b>${incomplete}</b>`;
+    }
+    function addTask(title, due, priority) {
+        tasks.push({
+            id: taskIdCounter++,
+            title,
+            due: due || null,
+            priority,
+            completed: false,
+            created: Date.now()
+        });
+        saveTasks();
+        renderTasks();
+    }
+    function toggleComplete(id) {
+        const t = tasks.find(t => t.id === id);
+        if (t) {
+            t.completed = !t.completed;
+            saveTasks();
+            renderTasks();
+        }
+    }
+    function deleteTask(id) {
+        if (confirm('Delete this task?')) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+        }
+    }
+    function editTask(id) {
+        const t = tasks.find(t => t.id === id);
+        if (!t) return;
+        const newTitle = prompt('Edit task title:', t.title);
+        if (newTitle !== null && newTitle.trim()) {
+            t.title = newTitle.trim();
+            saveTasks();
+            renderTasks();
+        }
+    }
+    taskForm.onsubmit = e => {
+        e.preventDefault();
+        addTask(taskTitle.value.trim(), taskDue.value, taskPriority.value);
+        taskTitle.value = '';
+        taskDue.value = '';
+        taskPriority.value = 'normal';
+    };
+    showCompleted.onchange = renderTasks;
+    showIncomplete.onchange = renderTasks;
+    sortTasks.onchange = renderTasks;
+    searchTasks.oninput = renderTasks;
+
+    loadTasks();
+    renderTasks();
+
+    // Generate 2000 demo tasks if empty
+    if (tasks.length === 0) {
+        for (let i = 1; i <= 2000; ++i) {
+            tasks.push({
+                id: taskIdCounter++,
+                title: `Demo Task #${i}`,
+                due: (i % 5 === 0) ? new Date(Date.now() + (i % 30) * 864e5).toISOString().slice(0,10) : null,
+                priority: (i % 3 === 0) ? 'high' : (i % 3 === 1 ? 'normal' : 'low'),
+                completed: i % 7 === 0,
+                created: Date.now() - (2000 - i) * 100000
+            });
+        }
+        saveTasks();
+        renderTasks();
+    }
+    </script>
 </body>
 </html>
