@@ -86,7 +86,7 @@ function addTask(tasks) {
     const rl = prompt();
     rl.question('Enter task description: ', desc => {
         if (desc.trim() === '') {
-            console.log('Task cannot be empty.');
+            console.log('Task cannot be empty, try again.');
         } else {
             tasks.push({ text: desc.trim(), done: false });
             saveTasks(tasks);
