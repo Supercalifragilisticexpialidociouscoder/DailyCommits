@@ -77,7 +77,7 @@ function handleMenu(choice) {
             console.log('Goodbye!');
             process.exit(0);
         default:
-            console.log('Invalid option.');
+            console.log('Invalid option. Please try again.');
             mainMenu();
     }
 }
