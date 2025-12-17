@@ -104,7 +104,7 @@ function markTaskDone(tasks) {
     }
     printTasks(tasks);
     const rl = prompt();
-    rl.question('Enter task number to mark as done: ', num => {
+    rl.question('Enter the amount task number to mark as done: ', num => {
         const idx = parseInt(num) - 1;
         if (isNaN(idx) || idx < 0 || idx >= tasks.length) {
             console.log('Invalid task number.');
