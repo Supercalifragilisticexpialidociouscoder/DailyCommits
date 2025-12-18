@@ -37,6 +37,7 @@ def complete_task(index):
     else:
         print("Invalid task number.")
 
+
 def delete_task(index):
     tasks = load_tasks()
     if 0 <= index < len(tasks):
