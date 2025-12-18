@@ -1,6 +1,6 @@
 import json
 import os
-
+# Simple Task Manager
 TASKS_FILE = "tasks.json"
 
 def load_tasks():
