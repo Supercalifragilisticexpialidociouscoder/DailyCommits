@@ -1,6 +1,6 @@
 import random
 import os
-# File to store the best score
+
 SCORE_FILE = "best_score.txt"
 
 def load_best_score():
