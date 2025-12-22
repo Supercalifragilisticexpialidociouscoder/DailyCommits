@@ -6,7 +6,6 @@ const readline = require('readline');
  * Big Project: Simple Task Manager CLI App
  * Features:
  * - Add tasks
- * - List tasks
  * - Mark tasks as done
  * - Delete tasks
  * - Persist tasks to a JSON file
