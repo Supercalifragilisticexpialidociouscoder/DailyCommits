@@ -29,6 +29,7 @@ s1.set_marks(90)
 print(s1.get_marks())
 
 
+#print
 class A:
     def method1(self):
         print("Method 1 from class A")
