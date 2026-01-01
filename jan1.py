@@ -85,10 +85,13 @@ def main():
         firework()
         time.sleep(0.3)
 
+
     clear()
     slow_print(Fore.GREEN + "🚀 2026 IS YOUR YEAR 🚀", 0.07)
     slow_print(Fore.CYAN + "Build. Learn. Dominate.", 0.07)
     slow_print(Fore.MAGENTA + "Happy New Year 💫", 0.07)
+
+
 
 if __name__ == "__main__":
     main()
