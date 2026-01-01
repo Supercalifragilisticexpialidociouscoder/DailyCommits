@@ -70,6 +70,7 @@ def firework(width=60, height=20):
         time.sleep(0.05)
 
 # ---------- MAIN ----------
+#Fire works
 def main():
     clear()
     slow_print(Fore.CYAN + "✨ Loading New Year Celebration ✨", 0.05)
