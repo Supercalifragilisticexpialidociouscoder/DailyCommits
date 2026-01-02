@@ -7,9 +7,9 @@ for i in range(x):
     i += 1
     sum += i
     for j in range(a - i):
-        print(" ", end="")
+        print(f"{" "} + {" "} + {" "}", end="" )
     for k in range(i):
-        print("* ", end="")
+        print(f'{"* "} + {"* "} + {"* "} ,end=""' )
     print()
 
 
@@ -18,7 +18,7 @@ for y in range(y,0 ,-1):
     y -= 1
     sum += y
     for j in range(a - y):
-        print(" ", end="")
+        print(f"{" "} + {" "} + {" "}" ,end="" )
     for k in range(y):
-        print("* ", end="")
+        print(f'{"* "} + {"* "} + {"* "} ,end=""' )
     print()
