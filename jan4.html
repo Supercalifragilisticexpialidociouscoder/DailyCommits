@@ -9,7 +9,55 @@
     <div class="cool-box">
         <h1>Cool CSS & HTML Demo</h1>
         <p>This box has a glowing border and a gradient background!</p>
-        <button class="glow-btn">Click Me.</button>
+        <button class="glow-btn">Click Me</button>
     </div>
+    <style>
+    body {
+        background: linear-gradient(135deg, #0f2027, #2c5364);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cool-box {
+        background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+        padding: 2rem 3rem;
+        border-radius: 20px;
+        box-shadow: 0 0 40px 10px #66a6ff88;
+        border: 3px solid #fff;
+        text-align: center;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 40px 10px #66a6ff88; }
+        50% { box-shadow: 0 0 60px 20px #89f7feaa; }
+        100% { box-shadow: 0 0 40px 10px #66a6ff88; }
+    }
+    .cool-box h1 {
+        color: #0f2027;
+        margin-bottom: 1rem;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .cool-box p {
+        color: #2c5364;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+    }
+    .glow-btn {
+        background: #2c5364;
+        color: #fff;
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 0 10px #66a6ff, 0 0 20px #89f7fe;
+        transition: transform 0.2s;
+    }
+    .glow-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px #66a6ff, 0 0 40px #89f7fe;
+    }
+    </style>
 </body>
 </html>
