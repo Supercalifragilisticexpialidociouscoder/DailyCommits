@@ -171,4 +171,5 @@ def main():
         turn = 'b' if turn == 'w' else 'w'
 
 if __name__ == "__main__":
+    
     main()
