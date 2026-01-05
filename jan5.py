@@ -119,3 +119,56 @@ def create_board():
             board[y_back][x] = piece(color)
     return board
 
+def print_board(board):
+    print("  a b c d e f g h")
+    for y in range(8):
+        print(8 - y, end=' ')
+        for x in range(8):
+            piece = board[y][x]
+            if piece:
+                s = piece.symbol if piece.color == 'w' else piece.symbol.lower()
+                print(s, end=' ')
+            else:
+                print('.', end=' ')
+        print(8 - y)
+    print("  a b c d e f g h")
+
+def parse_move(move):
+    if len(move) != 4:
+        return None
+    x1 = ord(move[0]) - ord('a')
+    y1 = 8 - int(move[1])
+    x2 = ord(move[2]) - ord('a')
+    y2 = 8 - int(move[3])
+    if 0 <= x1 < 8 and 0 <= y1 < 8 and 0 <= x2 < 8 and 0 <= y2 < 8:
+        return x1, y1, x2, y2
+    return None
+
+def main():
+    board = create_board()
+    turn = 'w'
+    while True:
+        print_board(board)
+        print(f"{'White' if turn == 'w' else 'Black'}'s move (e.g. e2e4): ", end='')
+        move = input().strip()
+        if move == 'exit':
+            break
+        parsed = parse_move(move)
+        if not parsed:
+            print("Invalid move format.")
+            continue
+        x1, y1, x2, y2 = parsed
+        piece = board[y1][x1]
+        if not piece or piece.color != turn:
+            print("No piece of yours at that position.")
+            continue
+        valid = piece.valid_moves(board, x1, y1)
+        if (x2, y2) not in valid:
+            print("Invalid move for that piece.")
+            continue
+        board[y2][x2] = piece
+        board[y1][x1] = None
+        turn = 'b' if turn == 'w' else 'w'
+
+if __name__ == "__main__":
+    main()
