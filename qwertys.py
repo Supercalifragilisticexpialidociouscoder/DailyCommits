@@ -1,5 +1,5 @@
 #epic build
-def qwertys():    return "This is the qwertyys module."  
+def qwertys():    return "This is the qwertys module."  
 #epic test
 def test_qwertys():    assert qwertys() == "This is the qwertys module."
 #epic end
