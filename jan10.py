@@ -5,3 +5,5 @@ def daily_commit_message():
     message = f"Daily commit for {today.strftime('%B %d, %Y')}"
     return message
 
+if __name__ == "__main__":
+    print(daily_commit_message())
