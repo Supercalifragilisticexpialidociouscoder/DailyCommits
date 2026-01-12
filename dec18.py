@@ -22,7 +22,7 @@ def add_task(description):
 def list_tasks():
     tasks = load_tasks()
     if not tasks:
-        print("No tasks found.")
+        print("No tasks found..")
         return
     for idx, task in enumerate(tasks, 1):
         status = "✓" if task["done"] else "✗"
