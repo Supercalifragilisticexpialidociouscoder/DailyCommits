@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Daily Commit Tracker</title>
 </head>
 <body>
     <h1>New day new file</h1>
     <p>Hello</p>
+    <div class="tracker">
+        <label>
+            <input type="checkbox" id="commitCheckbox">
+            I made my commit today!
+        </label>
+        <span id="status"></span>
+    </div>
+    <script>
+        const checkbox = document.getElementById('commitCheckbox');
+        const status = document.getElementById('status');
+        checkbox.addEventListener('change', function() {
+            if (checkbox.checked) {
+                status.textContent = "✅ Great job!";
+                status.className = "done";
+            } else {
+                status.textContent = "";
+                status.className = "";
+            }
+        });
+    </script>
 </body>
 </html>
