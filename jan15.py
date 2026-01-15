@@ -288,6 +288,7 @@ def get_day_of_week(date_str):
 def days_between(d1, d2):
     dt1 = datetime.datetime.strptime(d1, "%Y-%m-%d")
     dt2 = datetime.datetime.strptime(d2, "%Y-%m-%d")
+    
     return abs((dt2 - dt1).days)
 
 def print_hello_world():
