@@ -44,3 +44,48 @@ def bubble_sort(arr):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
     return arr
 
+def reverse_string(s):
+    return s[::-1]
+
+def count_vowels(s):
+    return sum(1 for c in s.lower() if c in 'aeiou')
+
+def unique_elements(lst):
+    return list(set(lst))
+
+def square_numbers(n):
+    return [x**2 for x in range(n)]
+
+def cube_numbers(n):
+    return [x**3 for x in range(n)]
+
+def current_time():
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+def palindrome(s):
+    return s == s[::-1]
+
+def merge_dicts(d1, d2):
+    return {**d1, **d2}
+
+def sum_digits(n):
+    return sum(int(d) for d in str(abs(n)))
+
+def factorial_list(n):
+    return [factorial(i) for i in range(n)]
+
+def even_numbers(n):
+    return [x for x in range(n) if x % 2 == 0]
+
+def odd_numbers(n):
+    return [x for x in range(n) if x % 2 != 0]
+
+def flatten(lst):
+    return [item for sublist in lst for item in sublist]
+
+def transpose(matrix):
+    return [list(row) for row in zip(*matrix)]
+
+def matrix_add(a, b):
+    return [[a[i][j] + b[i][j] for j in range(len(a[0]))] for i in range(len(a))]
+
