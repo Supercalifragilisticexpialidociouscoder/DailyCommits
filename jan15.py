@@ -233,3 +233,73 @@ def repeat_string(s, n):
 def chunk_list(lst, size):
     return [lst[i:i+size] for i in range(0, len(lst), size)]
 
+def flatten_dict(d, parent_key='', sep='.'):
+    items = []
+    for k, v in d.items():
+        new_key = f"{parent_key}{sep}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.extend(flatten_dict(v, new_key, sep=sep).items())
+        else:
+            items.append((new_key, v))
+    return dict(items)
+
+def unflatten_dict(d, sep='.'):
+    result = {}
+    for k, v in d.items():
+        keys = k.split(sep)
+        d2 = result
+        for key in keys[:-1]:
+            d2 = d2.setdefault(key, {})
+        d2[keys[-1]] = v
+    return result
+
+def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return None
+
+def parse_int(s):
+    try:
+        return int(s)
+    except ValueError:
+        return None
+
+def parse_float(s):
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+def random_choice(lst):
+    return random.choice(lst)
+
+def random_sample(lst, k):
+    return random.sample(lst, k)
+
+def shuffle_list(lst):
+    random.shuffle(lst)
+    return lst
+
+def get_day_of_week(date_str):
+    dt = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    return dt.strftime("%A")
+
+def days_between(d1, d2):
+    dt1 = datetime.datetime.strptime(d1, "%Y-%m-%d")
+    dt2 = datetime.datetime.strptime(d2, "%Y-%m-%d")
+    return abs((dt2 - dt1).days)
+
+def print_hello_world():
+    print("Hello, World!")
+
+def main():
+    print(greet("User"))
+    print(f"Factorial of 5: {factorial(5)}")
+    print(f"Fibonacci(10): {fibonacci(10)}")
+    print(f"Primes up to 20: {primes_up_to(20)}")
+    print(f"Random list: {random_list(5)}")
+    print(f"Current time: {current_time()}")
+
+if __name__ == "__main__":
+    main()
