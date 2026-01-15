@@ -142,3 +142,94 @@ def to_uppercase(lst):
 def to_lowercase(lst):
     return [s.lower() for s in lst]
 
+def squares_dict(n):
+    return {x: x**2 for x in range(n)}
+
+def cubes_dict(n):
+    return {x: x**3 for x in range(n)}
+
+def char_count(s):
+    return {c: s.count(c) for c in set(s)}
+
+def merge_lists(l1, l2):
+    return l1 + l2
+
+def zip_lists(l1, l2):
+    return list(zip(l1, l2))
+
+def filter_even(lst):
+    return [x for x in lst if x % 2 == 0]
+
+def filter_odd(lst):
+    return [x for x in lst if x % 2 != 0]
+
+def all_positive(lst):
+    return all(x > 0 for x in lst)
+
+def any_negative(lst):
+    return any(x < 0 for x in lst)
+
+def sum_matrix(matrix):
+    return sum(sum(row) for row in matrix)
+
+def identity_matrix(n):
+    return [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+
+def diagonal_sum(matrix):
+    return sum(matrix[i][i] for i in range(len(matrix)))
+
+def reverse_list(lst):
+    return lst[::-1]
+
+def rotate_list(lst, k):
+    k = k % len(lst)
+    return lst[-k:] + lst[:-k]
+
+def count_occurrences(lst, val):
+    return lst.count(val)
+
+def find_indices(lst, val):
+    return [i for i, x in enumerate(lst) if x == val]
+
+def remove_value(lst, val):
+    return [x for x in lst if x != val]
+
+def replace_value(lst, old, new):
+    return [new if x == old else x for x in lst]
+
+def split_string(s, delim=' '):
+    return s.split(delim)
+
+def join_strings(lst, delim=' '):
+    return delim.join(lst)
+
+def capitalize_words(s):
+    return ' '.join(word.capitalize() for word in s.split())
+
+def title_case(s):
+    return s.title()
+
+def is_substring(s, sub):
+    return sub in s
+
+def starts_with(s, prefix):
+    return s.startswith(prefix)
+
+def ends_with(s, suffix):
+    return s.endswith(suffix)
+
+def strip_string(s):
+    return s.strip()
+
+def left_strip(s):
+    return s.lstrip()
+
+def right_strip(s):
+    return s.rstrip()
+
+def repeat_string(s, n):
+    return s * n
+
+def chunk_list(lst, size):
+    return [lst[i:i+size] for i in range(0, len(lst), size)]
+
