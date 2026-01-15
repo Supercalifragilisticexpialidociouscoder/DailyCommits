@@ -89,3 +89,56 @@ def transpose(matrix):
 def matrix_add(a, b):
     return [[a[i][j] + b[i][j] for j in range(len(a[0]))] for i in range(len(a))]
 
+def matrix_mult(a, b):
+    result = []
+    for i in range(len(a)):
+        row = []
+        for j in range(len(b[0])):
+            s = 0
+            for k in range(len(b)):
+                s += a[i][k] * b[k][j]
+            row.append(s)
+        result.append(row)
+    return result
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return abs(a*b) // gcd(a, b)
+
+def is_anagram(s1, s2):
+    return sorted(s1) == sorted(s2)
+
+def count_words(s):
+    return len(s.split())
+
+def most_frequent(lst):
+    return max(set(lst), key=lst.count)
+
+def remove_duplicates(lst):
+    return list(dict.fromkeys(lst))
+
+def sum_list(lst):
+    return sum(lst)
+
+def product_list(lst):
+    prod = 1
+    for x in lst:
+        prod *= x
+    return prod
+
+def find_max(lst):
+    return max(lst)
+
+def find_min(lst):
+    return min(lst)
+
+def to_uppercase(lst):
+    return [s.upper() for s in lst]
+
+def to_lowercase(lst):
+    return [s.lower() for s in lst]
+
