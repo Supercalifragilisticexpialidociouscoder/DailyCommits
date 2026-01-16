@@ -1,2 +1,2 @@
 # DailyCommits
-Used for commit streak.
+Used for commit streak
