@@ -8,6 +8,7 @@ class student:
 s1 = student("abhi", 20)
 s1.display()
 
+
 class student:
 	def __init__(self, name, marks):
 		self.name = name
