@@ -13,6 +13,7 @@ class student:
 		self.name = name
 		self.__marks = marks
 
+	
 	def get_marks(self):
 		return self.__marks
 
