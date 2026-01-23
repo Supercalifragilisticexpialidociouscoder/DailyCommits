@@ -32,4 +32,4 @@ for i in range(1,n):
         res = prefix[end] - prefix[start-1]
     print(f"the sum value of {start} and {end} is {res}")
 
-    .
+    
